@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <header>
+    <nav>
+      To Do List
+    </nav>
+  </header>
+
+  <!-- Button to create tasks -->
+  <div id="con" class="Buttons">
+    <Button id="createBtn" onClick="openForm()">
+      Create
+    </Button>
+  </div>
+
+  <div class="Form-Popup" id="myForm">
+    <form action class="Form-Container" id="task_form">
+      <h1>Create Task</h1>
+      <div class="Form-Element-Wrap" id="name_wrap">
+        <label for="Task-Name"><b>Name</b></label>
+        <input type="text" placeholder="What is your plan?" id="task_name" class="Typing" required>
+      </div>
+
+      <div class="Form-Element-Wrap" id="date_wrap">
+        <label for="Task-Date"><b>Date</b></label>
+        <input type="date" id="task_date" class="Typing" required>
+      </div>
+
+      <div class="Form-Element-Wrap" id="Category">
+        <label for="Task-Category"><b>Category</b></label>
+        <div class="Category-Wrap">
+          <input type="radio" id="Red" name="task_category" value="Red" checked />
+          <label for="Red">Red</label>
+          <input type="radio" id="Orange" name="task_category" value="Orange" />
+          <label for="Orange">Orange</label>
+          <input type="radio" id="Yellow" name="task_category" value="Yellow" />
+          <label for="Yellow">Yellow</label>
+          <input type="radio" id="Green" name="task_category" value="Green" />
+          <label for="Green">Green</label>
+          <input type="radio" id="Blue" name="task_category" value="Blue" />
+          <label for="Blue">Blue</label>
+        </div>
+      </div>
+
+      <div class="Button-Wrap">
+        <button type="button" class="Create-Button" onclick="newElement()">Create</button>
+        <button type="button" class="Close-Button" onclick="closeForm()" style="background-color: red;">Close</button>
+      </div>
+    </form>
+
+  </div>
+
+  <!-- Display tasks -->
+  <ul class="List">
+
+  </ul>
+
+  <!--
+  This script places a badge on your repl's full-browser view back to your repl's cover
+  page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
+  teal, blue, blurple, magenta, pink!
+  -->
+  <script src="https://replit.com/public/js/replit-badge-v2.js" theme="dark" position="bottom-right"></script>
+</body>
+
+</html>

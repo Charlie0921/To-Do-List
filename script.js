@@ -6,22 +6,27 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
+var task_id = 0;
+
 function newElement() {
   console.log("________________________________________")
   const myForm = document.querySelector("#myForm")
   const task_form = myForm.querySelector("#task_form")
-  const inputName = task_form.querySelector("#name_wrap #task_name").value;
+  let inputName = task_form.querySelector("#name_wrap #task_name").value;
   console.log(inputName)
-  const inputDate = task_form.querySelector("#date_wrap #task_date").value
+  let inputDate = task_form.querySelector("#date_wrap #task_date").value
   console.log(inputDate)
-  const inputCategory = task_form.querySelector('#Category [name="task_category"]:checked').value
+  let inputCategory = task_form.querySelector('#Category [name="task_category"]:checked').value
   console.log(inputCategory)
+
 
   //Create new elements
   const todoList = document.querySelector('.List');
   const newLi = document.createElement('li')
   const newdiv = document.createElement('div')
+  task_id = task_id + 1;
   newLi.className = "Task"
+  newLi.id = "Task" + task_id;
   newdiv.className = "Task-Elements"
 
   //Check
@@ -73,6 +78,18 @@ function newElement() {
   const editDiv = document.createElement('img')
   editDiv.className = "edit"
   editDiv.src = "../img/edit.svg"
+  editDiv.addEventListener('click', function() {
+    openForm();
+
+    //after opening editing page
+    let list = document.querySelector(".List")
+    let task = document.querySelector("#Task" + task_id)
+    let name = task.querySelector(".Name").value
+    let date = task.querySelector(".Due").value
+
+    //
+
+  });
 
 
   //Remove Button
@@ -80,7 +97,7 @@ function newElement() {
   removeDiv.className = "remove"
   removeDiv.src = "../img/remove.svg"
 
-  removeDiv.addEventListener('click', function(e) {
+  removeDiv.addEventListener('click', function() {
     newLi.parentNode.removeChild(newLi);
   });
 

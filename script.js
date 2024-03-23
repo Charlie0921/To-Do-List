@@ -28,26 +28,16 @@ function newElement() {
   newLi.id = "Task" + task_id;
   newdiv.className = "Task-Elements"
 
-  //Selector
-  const selectDiv = document.createElement('div')
-  selectDiv.className = "Select"
-  selectDiv.addEventListener('click', function() {
-    selectDiv.style.backgroundColor = "#6b6666"
+  //Finish Button
+  const finishDiv = document.createElement('div')
+  finishDiv.className = "Finish"
+  finishDiv.addEventListener('click', function() {
+    finishDiv.style.backgroundColor = "#6b6666"
   });
 
   //Set name for each task
-  const nameDiv = document.createElement('div')
-  nameDiv.className = "Name"
-  nameDiv.textContent = inputNameWrapper.value
 
   //Edit Button
-  const editDiv = document.createElement('img')
-  editDiv.className = "edit"
-  editDiv.src = "../img/edit.svg"
-  editDiv.addEventListener('click', function() {
-    openForm();
-
-  });
 
   //Remove Button
   const removeDiv = document.createElement('img')
@@ -59,17 +49,24 @@ function newElement() {
   });
 
   //Add Multiple elements
-  newdiv.appendChild(selectDiv)
+  newdiv.appendChild(Name())
   newdiv.appendChild(Category())
   newdiv.appendChild(nameDiv)
   newdiv.appendChild(DueDate())
-  newdiv.appendChild(editDiv)
+  newdiv.appendChild(Edit(task_id))
   newdiv.appendChild(removeDiv)
 
   newLi.appendChild(newdiv);
 
   todoList.appendChild(newLi);
   console.log(newLi.length)
+}
+
+function Name() {
+  const nameDiv = document.createElement('div')
+  nameDiv.className = "Name"
+  nameDiv.textContent = inputNameWrapper.value
+  return nameDiv
 }
 
 function Category() {
@@ -112,4 +109,26 @@ function DueDate() {
     dueDiv.textContent = "D-" + Math.abs(diffDate)
   }
   return dueDiv
+}
+
+const editCreate = document.getElementsByClassName("Create-Button")
+
+function Edit(Number) {
+  const editDiv = document.createElement('img')
+  editDiv.className = "edit"
+  editDiv.src = "../img/edit.svg"
+  editDiv.addEventListener('click', function() {
+    openForm();
+    console.log(Number)
+
+    var nameID = ".List #Task" + Number + " .Task-Elements .Name"
+    let ExtractedName = document.querySelector(nameID).innerText
+    inputNameWrapper.value = ExtractedName;
+    console.log(ExtractedName)
+  });
+
+  //Name of the task can be inserted automatically
+  //No idea how to share a single form element for multiple use
+
+  return editDiv
 }

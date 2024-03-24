@@ -1,4 +1,5 @@
 const formElement = document.getElementById("myForm")
+const editCreate = document.getElementById("Form-Button")
 
 function openForm() {
   formElement.style.display = "flex";
@@ -6,6 +7,7 @@ function openForm() {
 
 function closeForm() {
   formElement.style.display = "none";
+  editCreate.textContent = "Create"
 }
 
 
@@ -33,6 +35,7 @@ function newElement() {
   finishDiv.className = "Finish"
   finishDiv.addEventListener('click', function() {
     finishDiv.style.backgroundColor = "#6b6666"
+    alert("finish")
   });
 
   //Set name for each task
@@ -40,13 +43,6 @@ function newElement() {
   //Edit Button
 
   //Remove Button
-  const removeDiv = document.createElement('img')
-  removeDiv.className = "remove"
-  removeDiv.src = "../img/remove.svg"
-
-  removeDiv.addEventListener('click', function() {
-    newLi.parentNode.removeChild(newLi);
-  });
 
   //Add Multiple elements
   newdiv.appendChild(finishDiv)
@@ -54,7 +50,7 @@ function newElement() {
   newdiv.appendChild(Name(inputNameWrapper.value))
   newdiv.appendChild(DueDate(inputDateWrapper.value))
   newdiv.appendChild(Edit(task_id))
-  newdiv.appendChild(removeDiv)
+  newdiv.appendChild(Remove(newLi))
 
   newLi.appendChild(newdiv);
 
@@ -74,6 +70,7 @@ function Category() {
 
   const categoryDiv = document.createElement('div')
   categoryDiv.className = "Category"
+  categoryDiv.setAttribute("value", inputCategoryWrapper.value)
 
   if (inputCategoryWrapper.value === "Red") {
     categoryDiv.style.backgroundColor = "#D82525";
@@ -95,6 +92,8 @@ function Category() {
 function DueDate(number) {
   const dueDiv = document.createElement('div')
   dueDiv.className = "Due"
+  console.log("input date" + number)
+  dueDiv.setAttribute("value", number)
   const todayDate = new Date();
   const dueDate = new Date(number);
 
@@ -120,18 +119,66 @@ function Edit(Number) {
 
   editDiv.addEventListener('click', function() {
     openForm();
-    const editCreate = document.getElementById("Form-Button")
 
     console.log(Number)
 
+    //Extract name from the original task
     var nameID = ".List #Task" + Number + " .Task-Elements .Name"
     let ExtractedName = document.querySelector(nameID)
     inputNameWrapper.value = ExtractedName.innerText;
     console.log(ExtractedName)
 
+    //Extract date from the original task
+    var divDate = ".List #Task" + Number + " .Task-Elements .Due"
+    let ExtractedDate = document.querySelector(divDate)
+    console.log(ExtractedDate.getAttribute("value"))
+    inputDateWrapper.value = ExtractedDate.getAttribute("value")
+
+    //Extract category from the orginal task
+    var divCategory = ".List #Task" + Number + " .Task-Elements .Category"
+    let ExtractedCategory = document.querySelector(divCategory)
+    console.log(ExtractedCategory.getAttribute("value"))
+
     function edit() {
       console.log("edit" + ExtractedName)
+      //change name
       ExtractedName.innerText = inputNameWrapper.value
+
+      //change date
+      let today = new Date();
+      let due = new Date(inputDateWrapper.value)
+
+      diff = due - today
+
+      var diffDate = Math.floor(diff / (1000 * 60 * 60 * 24));
+      console.log("diffDate: ", diffDate)
+      if (diffDate < 0) {
+        ExtractedDate.textContent = "D+" + Math.abs(diffDate)
+      } else {
+        ExtractedDate.textContent = "D-" + Math.abs(diffDate)
+      }
+      //update div value after changing the date
+      ExtractedDate.setAttribute(
+        "value", inputDateWrapper.value)
+
+      //change category
+      let inputCategoryWrapper = task_form.querySelector('#Category [name="task_category"]:checked')
+
+      if (inputCategoryWrapper.value === "Red") {
+        ExtractedCategory.style.backgroundColor = "#D82525";
+      } else if (inputCategoryWrapper.value === "Orange") {
+        ExtractedCategory.style.backgroundColor = "#E37D04";
+      } else if (inputCategoryWrapper.value === "Yellow") {
+        ExtractedCategory.style.backgroundColor = "#EDB900";
+      } else if (inputCategoryWrapper.value === "Green") {
+        ExtractedCategory.style.backgroundColor = "#518918";
+      } else {
+        ExtractedCategory.style.backgroundColor = "#0044F4";
+      }
+
+      ExtractedCategory.setAttribute(
+        "value", inputCategoryWrapper.value)
+
     }
 
     editCreate.textContent = "Edit"
@@ -139,11 +186,22 @@ function Edit(Number) {
   });
 
   //Name of the task can be inserted automatically
+  //Name can be editable
   //No idea how to share a single form element for multiple use
 
   return editDiv
 }
 
+function Remove(newLi) {
+  const removeDiv = document.createElement('img')
+  removeDiv.className = "remove"
+  removeDiv.src = "../img/remove.svg"
+
+  removeDiv.addEventListener('click', function() {
+    newLi.parentNode.removeChild(newLi);
+  });
+  return removeDiv;
+}
 function save() {
   console.log("hello")
 }

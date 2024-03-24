@@ -32,7 +32,7 @@
 
       <div class="Form-Element-Wrap" id="date_wrap">
         <label for="Task-Date"><b>Date</b></label>
-        <input type="date" id="task_date" class="Typing" required>
+        <input type="date" id="task_date" class="Typing" min="1500-01-01" max="2999-01-01" required>
       </div>
 
       <div class="Form-Element-Wrap" id="Category">
@@ -61,7 +61,14 @@
 
   <!-- Display tasks -->
   <ul class="List">
-
+    <li class="Task" id="Task0">
+      <div class="Task-Elements">
+        <div class="Finish"></div>
+        <div class="Category" style="background-color: rgb(227, 125, 4) "></div>
+        <div class="Name">QWER</div>
+        <div class="Due">D-1</div>
+        <img class="edit" src="../img/edit.svg" onclick=Edit(0) />
+        <img class="remove" src="../img/remove.svg" onclick="Remove(document.getElementById('Task0'))">
   </ul>
 
   <!--

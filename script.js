@@ -20,7 +20,7 @@ function newElement() {
   //Create new element in the list
   const todoList = document.querySelector('.List');
   const newLi = document.createElement('li')
-  const newdiv = document.createElement('div')
+  var newdiv = document.createElement('div')
 
   //Set new id for each task
   task_id = task_id + 1;
@@ -49,10 +49,10 @@ function newElement() {
   });
 
   //Add Multiple elements
-  newdiv.appendChild(Name())
+  newdiv.appendChild(finishDiv)
   newdiv.appendChild(Category())
-  newdiv.appendChild(nameDiv)
-  newdiv.appendChild(DueDate())
+  newdiv.appendChild(Name(inputNameWrapper.value))
+  newdiv.appendChild(DueDate(inputDateWrapper.value))
   newdiv.appendChild(Edit(task_id))
   newdiv.appendChild(removeDiv)
 
@@ -62,10 +62,10 @@ function newElement() {
   console.log(newLi.length)
 }
 
-function Name() {
+function Name(text) {
   const nameDiv = document.createElement('div')
   nameDiv.className = "Name"
-  nameDiv.textContent = inputNameWrapper.value
+  nameDiv.textContent = text
   return nameDiv
 }
 
@@ -92,11 +92,11 @@ function Category() {
   return categoryDiv
 }
 
-function DueDate() {
+function DueDate(number) {
   const dueDiv = document.createElement('div')
   dueDiv.className = "Due"
   const todayDate = new Date();
-  const dueDate = new Date(inputDateWrapper.value);
+  const dueDate = new Date(number);
 
   diff = dueDate - todayDate
   console.log(diff)
@@ -111,24 +111,39 @@ function DueDate() {
   return dueDiv
 }
 
-const editCreate = document.getElementsByClassName("Create-Button")
+
 
 function Edit(Number) {
   const editDiv = document.createElement('img')
   editDiv.className = "edit"
   editDiv.src = "../img/edit.svg"
+
   editDiv.addEventListener('click', function() {
     openForm();
+    const editCreate = document.getElementById("Form-Button")
+
     console.log(Number)
 
     var nameID = ".List #Task" + Number + " .Task-Elements .Name"
-    let ExtractedName = document.querySelector(nameID).innerText
-    inputNameWrapper.value = ExtractedName;
+    let ExtractedName = document.querySelector(nameID)
+    inputNameWrapper.value = ExtractedName.innerText;
     console.log(ExtractedName)
+
+    function edit() {
+      console.log("edit" + ExtractedName)
+      ExtractedName.innerText = inputNameWrapper.value
+    }
+
+    editCreate.textContent = "Edit"
+    editCreate.onclick = () => edit()
   });
 
   //Name of the task can be inserted automatically
   //No idea how to share a single form element for multiple use
 
   return editDiv
+}
+
+function save() {
+  console.log("hello")
 }
